@@ -3,6 +3,7 @@
 #include<locale.h>
 #include<string.h>
 
+//Função para registrar um novo usuário
 int registro()
 {
 	char cpf[40], nome[40], sobrenome[40], cargo[40], arquivo[40];
@@ -10,17 +11,21 @@ int registro()
 	printf("\nDigite o CPF a ser cadastrado: ");
 	scanf("%s", cpf);
 	
+	//Copia o CPF para a variável 'arquivo', que será usada como nome do arquivo
 	strcpy(arquivo, cpf);
 	
+	//Cria um novo arquivo com o nome do CPF e escreve o CPF nele
 	FILE *file; //Cria arquivo
 	file = fopen(arquivo, "w");
 	fprintf(file, cpf);
 	fclose(file);
 	
+	//Adiciona uma vírgula ao arquivo para separar o CPF dos outros dados
 	file = fopen(arquivo, "a");
 	fprintf(file, ",");
 	fclose(file);
 	
+	//Solicita o nome do usuário e escreve no arquivo
 	printf("\nDigite o nome a ser cadastrado: ");
 	scanf("%s", nome);
 	
@@ -50,20 +55,23 @@ int registro()
 	fprintf(file, cargo);
 	fclose(file);
 	
+	//Pausa o sistema após a finalização do registro
 	system("pause");
 }
 
+//Função para consultar um usuário cadastrado
 int consulta()
 {
-	setlocale(LC_ALL, "Portuguese");
 	char cpf[40], conteudo[200];
 	
 	printf("\nDigite o CPF a ser consultado: ");
 	scanf("%s", cpf);
 	
+	//Abre o arquivo correspondente ao CPF informado
 	FILE *file;
 	file = fopen(cpf, "r");
 	
+	//Verifica se o arquivo existe
 	if (file == NULL)
 	{
 		printf("Não foi possível abrir o arquivo, não localizado!\n");
@@ -79,6 +87,7 @@ int consulta()
 	system("pause");
 }
 
+//Função para deletar um usuário cadastrado
 int deletar()
 {
     char cpf[40];
@@ -124,7 +133,8 @@ int main()
 		printf("Escolha a opção desejada do menu:\n\n");
 		printf("\t1 - Registrar nomes\n");
 		printf("\t2 - Consultar nomes\n");
-		printf("\t3 - Deletar nomes\n\n"); 
+		printf("\t3 - Deletar nomes\n");
+		printf("\t4 - Sair do sistema\n\n");
 		printf("Opção: ");
 		scanf("%d", &opcao);
 		
@@ -140,7 +150,11 @@ int main()
 				break;
 			case 3:
 				deletar();
-				break; 
+				break;
+			case 4:
+				printf("Obrigado por utilizar o sistema!\n");
+				return 0;
+				break;
 			default:
 				printf("Valor inválido\n");
 				system("pause");
